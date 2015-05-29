@@ -1,0 +1,22 @@
+{
+  "name": "static",
+  "version": "0.0.1",
+  "homepage": "https://github.com/RobertSudwarts/twitter-realtime-heatmap",
+  "authors": [
+    "Robert Sudwarts <robert.sudwarts@gmail.com>"
+  ],
+  "description": "twitter_heatmap",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "heatmap.js.bower": "*",
+    "jquery": "~2.1.4",
+    "EventSource": "~0.0.5"
+  }
+}
