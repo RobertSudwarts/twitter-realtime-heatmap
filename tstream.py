@@ -1,9 +1,7 @@
+import ConfigParser
 import tweepy
-import json
 from pymongo import Connection
-from bson import json_util
 from tweepy.utils import import_simplejson
-
 
 json = import_simplejson()
 mongocon = Connection()
@@ -11,14 +9,18 @@ mongocon = Connection()
 db = mongocon.tstream
 col = db.tweets_tail
 
-consumer_key = ''
-consumer_secret = ''
+cfg = ConfigParser.ConfigParser()
+cfg.read("twitter_settings.cfg")
 
-access_token_key = ''
-access_token_secret = ''
+consumer_key = cfg.get('consumer', 'key')
+consumer_secret = cfg.get('consumer', 'secret')
+
+access_token_key = cfg.get('token', 'key')
+access_token_secret = cfg.get('token', 'secret')
 
 auth1 = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth1.set_access_token(access_token_key, access_token_secret)
+
 
 class StreamListener(tweepy.StreamListener):
     mongocon = Connection()
@@ -26,7 +28,6 @@ class StreamListener(tweepy.StreamListener):
     col = db.tweets
     json = import_simplejson()
 
-    
     def on_status(self, tweet):
         print 'Ran on_status'
 
@@ -38,10 +39,12 @@ class StreamListener(tweepy.StreamListener):
             pass
         else:
             col.insert(json.loads(data))
-            print(json.loads(data))
+            # print(json.loads(data))
 
 
 l = StreamListener()
 streamer = tweepy.Stream(auth=auth1, listener=l)
-setTerms = ['bigdata', 'devops', 'hadoop', 'twitter']
-streamer.filter(track = setTerms)
+# setTerms = ['bigdata', 'devops', 'hadoop', 'twitter']
+# setTerms = ['gold', 'corn', 'wheat', 'sugar']
+setTerms = ['iphone', 'android']
+streamer.filter(track=setTerms)

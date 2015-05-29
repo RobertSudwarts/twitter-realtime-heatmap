@@ -13,6 +13,9 @@ sdist
 develop-eggs
 .installed.cfg
 
+# ignore secret/keys config file
+twitter_settings.cfg
+
 # Installer logs
 pip-log.txt
 
